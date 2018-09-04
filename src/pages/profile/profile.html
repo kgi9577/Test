@@ -1,0 +1,99 @@
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFuGKHRYRXAKg3us3Jt4HZXheexvV1D0U&callback=initMap">
+</script>
+
+<ion-header>
+  <ion-navbar color="white">
+    <ion-title>candelibas</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="person-add" class="badge-container">
+          <span class="custom-badge">3</span>
+        </ion-icon>
+      </button>
+      <button ion-button icon-only (click)="goOptions()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+
+  <ion-row padding>
+    <!-- Avatar -->
+    <ion-col col-3>
+      <img src="https://avatars1.githubusercontent.com/u/918975?v=3&s=120" class="avatar" alt="">
+    </ion-col>
+    <!-- Information about user -->
+    <ion-col col-3 text-center>
+      <h6>21</h6>
+      <p no-padding no-margin>posts</p>
+    </ion-col>
+    <ion-col col-3 text-center>
+      <h6>114</h6>
+      <p no-paddin no-margin>followers</p>
+    </ion-col>
+    <ion-col col-3 text-center>
+      <h6>119</h6>
+      <p no-paddin no-margin>following</p>
+    </ion-col>
+  </ion-row>
+
+  <!-- Edit/follow button -->
+  <ion-row no-padding no-margin>
+    <ion-col no-padding no-margin col-4></ion-col>
+    <ion-col no-padding no-margin text-center col-8>
+      <button class="edit-button" (click)="goEditProfile()">Edit your profile</button>
+    </ion-col>
+    <ion-col col-3></ion-col>
+  </ion-row>
+
+  <!-- Profile info -->
+  <div padding>
+    <p no-margin no-padding><b>Can Delibas</b></p>
+    <p no-padding no-margin class="info">Software developer, open-source lover, invoker spammer & heavy metal guitarist</p>
+    <p no-padding no-margin class="info"><a href="#">github.com/candelibas</a></p>
+  </div>
+
+  <!-- Segments -->
+  <div>
+    <ion-segment [(ngModel)]="profile_segment">
+      <ion-segment-button value="grid">
+        <ion-icon name="apps"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="list">
+        <ion-icon name="list"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tagged" (click)="goTaggedProfile()">
+        <ion-icon name="photos"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="saved" (click)="goSavedProfile()">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div>
+    <select #census_variable id="census_variable">
+      <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0066PE">Percent of population over 25 that completed
+        high school
+      </option>
+      <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0017E">Median age</option>
+      <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0001E">Total population</option>
+      <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0016E">Average family size</option>
+      <option value="https://storage.googleapis.com/mapsdevsite/json/DP03_0088E">Per-capita income</option>
+    </select>
+  </div>
+  <div id="legend">
+    <div #census_min id="census_min">min</div>
+    <div #color_key class="color_key"><span id="data_caret">&#x25c6;</span></div>
+    <div #census_max id="census_max">max</div>
+  </div>
+  <div #data_box id="data_box" class="nicebox">
+    <label #data_label id="data_label" for="data_value"></label>
+    <span #data_label id="data_value"></span>
+  </div>
+  <div #map id="map"></div>>
+</ion-content>
