@@ -10,6 +10,17 @@ page-home {
     text-align: center;
   }
 
+  .badge{
+    ion-label {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline
+    }
+
+    ion-icon {
+      margin-left: 5px;
+    }
+  }
   /* Stories */
   .story {
     white-space: nowrap;

@@ -12,21 +12,21 @@ export class TaggedProfile {
   public images = [
     {
       id: 1,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e35/13473123_1544898359150795_654626889_n.jpg'
+      username: '김권일',
+      profile_img: 'https://avatars.githubusercontent.com/u/37039276?s=460&v=4',
+      post_img: '/assets/img/image_src/grov_mall.png'
     },
     {
       id: 2,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e35/12940826_1673029922963013_921771297_n.jpg'
+      username: '김권일',
+      profile_img: 'https://avatars.githubusercontent.com/u/37039276?s=460&v=4',
+      post_img: '/assets/img/image_src/la_koran_town.jpg'
     },
     {
       id: 3,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e15/10852865_738738146215825_1258215298_n.jpg'
+      username: '김권일',
+      profile_img: 'https://avatars.githubusercontent.com/u/37039276?s=460&v=4',
+      post_img: '/assets/img/image_src/gripeace.jpg'
     }
   ];
 

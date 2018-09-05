@@ -1,33 +1,57 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { ModalPost } from '../modal-post/modal-post';
 import { EditProfile } from '../edit-profile/edit-profile';
 import { Options } from '../options/options';
 import { TaggedProfile } from '../tagged-profile/tagged-profile';
 import { SavedProfile } from '../saved-profile/saved-profile';
+import { } from '@angular/core/src/view';
 
 declare var google: any;
 var censusMin = Number.MAX_VALUE, censusMax = -Number.MAX_VALUE;
+var mapStyle = [{
+  'featureType': 'all',
+  'elementType': 'all',
+  'stylers': [{ 'visibility': 'off' }]
+}, {
+  'featureType': 'landscape',
+  'elementType': 'geometry',
+  'stylers': [{ 'visibility': 'on' }, { 'color': '#fcfcfc' }]
+}, {
+  'featureType': 'water',
+  'elementType': 'labels',
+  'stylers': [{ 'visibility': 'off' }]
+}, {
+  'featureType': 'water',
+  'elementType': 'geometry',
+  'stylers': [{ 'visibility': 'on' }, { 'hue': '#5f94ff' }, { 'lightness': 60 }]
+}];
 
-@IonicPage()
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
 export class Profile {
   @ViewChild('map') mapRef: ElementRef;
-  map: any;
+  @ViewChild('censvariable') cvRef: ElementRef;
+  @ViewChild('census_min') cminRef: ElementRef;
+  @ViewChild('census_max') cmaxRef: ElementRef;
+  @ViewChild('data_caret') dcRef: ElementRef;
+  @ViewChild('data_box') dbRef: ElementRef;
+  @ViewChild('data_label') dlRef: ElementRef;
+  @ViewChild('data_value') dvRef: ElementRef;
 
+  public map: any;
   public profile_segment: string;
 
   // You can get this data from your API. This is a dumb data for being an example.
   public images = [
     {
       id: 1,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e35/13473123_1544898359150795_654626889_n.jpg'
+      username: '김권일',
+      profile_img: 'https://avatars.githubusercontent.com/u/37039276?s=460&v=4',
+      post_img: "/assets/img/image_src/grov_mall.png"
     },
     {
       id: 2,
@@ -41,30 +65,9 @@ export class Profile {
       profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
       post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e15/10852865_738738146215825_1258215298_n.jpg'
     },
-    {
-      id: 4,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e15/891528_841068522581102_1591061904_n.jpg'
-    },
-    {
-      id: 5,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-frx5-1.cdninstagram.com/t51.2885-15/e35/10809765_1474804169496730_887570428_n.jpg'
-    },
-    {
-      id: 6,
-      username: 'candelibas',
-      profile_img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      post_img: 'https://scontent-cdg2-1.cdninstagram.com/t51.2885-15/e15/891515_1524153351163603_439436363_n.jpg'
-    }
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public platform: Platform) {
-    platform.ready().then(() => {
-      this.initMap();
-    });
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   }
 
   // Define segment for everytime when profile page is active
@@ -108,26 +111,58 @@ export class Profile {
     modal.present();
   }
 
-  loadMapShapes() {
-    // load US state outline polygons from a GeoJson file
-    this.map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/states.js', { idPropertyName: 'STATE' });
+  ionViewDidLoad() {
+    this.initMap();
+  }
 
-    // wait for the request to complete by listening for the first feature to be
-    // added
-    google.maps.event.addListenerOnce(this.map.data, 'addfeature', function () {
-      google.maps.event.trigger(document.getElementById('census_variable'),
-        'change');
+  initMap() {
+    this.map = new google.maps.Map(this.mapRef.nativeElement, {
+      center: { lat: 40, lng: -100 },
+      zoom: 4,
+      styles: mapStyle
     });
+
+    this.map.data.setStyle(this.styleFeature);
+    this.map.data.addListener('mouseover', (e) => {
+      // set the hover state so the setStyle function can change the border
+      e.feature.setProperty('state', 'hover');
+
+      var percent = (e.feature.getProperty('census_variable') - censusMin) /
+        (censusMax - censusMin) * 100;
+
+      // update the label
+      this.dlRef.nativeElement.textContent =
+        e.feature.getProperty('NAME');
+      this.dvRef.nativeElement.textContent =
+        e.feature.getProperty('census_variable').toLocaleString();
+      this.dbRef.nativeElement.style.display = 'block';
+      this.dcRef.nativeElement.style.display = 'block';
+      this.dcRef.nativeElement.style.paddingLeft = percent + '%';
+    });
+
+    this.map.data.addListener('mouseout', (e) => {
+      // reset the hover state, returning the border to normal
+      e.feature.setProperty('state', 'normal');
+    });
+
+    var selectBox = this.cvRef.nativeElement;
+    google.maps.event.addDomListener(selectBox, 'change', () => {
+      this.clearCensusData();
+      this.loadCensusData(selectBox.value);
+    });
+
+    this.loadMapShapes();
+
   }
 
   loadCensusData(variable) {
-    // load the requested variable from the census API (using local copies)
+    // load the requested variable from the census API
     var xhr = new XMLHttpRequest();
     xhr.open('GET', variable + '.json');
-    xhr.onload = function () {
+    xhr.onload = () => {
       var censusData = JSON.parse(xhr.responseText);
       censusData.shift(); // the first row contains column names
-      censusData.forEach(function (row) {
+      censusData.forEach((row) => {
         var censusVariable = parseFloat(row[0]);
         var stateId = row[1];
 
@@ -146,10 +181,8 @@ export class Profile {
       });
 
       // update and display the legend
-      document.getElementById('census_min').textContent =
-        censusMin.toLocaleString();
-      document.getElementById('census_max').textContent =
-        censusMax.toLocaleString();
+      this.cminRef.nativeElement.textContent = censusMin.toLocaleString();
+      this.cmaxRef.nativeElement.textContent = censusMax.toLocaleString();
     };
     xhr.send();
   }
@@ -157,11 +190,11 @@ export class Profile {
   clearCensusData() {
     censusMin = Number.MAX_VALUE;
     censusMax = -Number.MAX_VALUE;
-    this.map.data.forEach(function (row) {
+    this.map.data.forEach((row) => {
       row.setProperty('census_variable', undefined);
     });
-    document.getElementById('data_box').style.display = 'none';
-    document.getElementById('data_caret').style.display = 'none';
+    this.dbRef.nativeElement.style.display = 'none';
+    this.dcRef.nativeElement.style.display = 'none';
   }
 
   styleFeature(feature) {
@@ -200,63 +233,55 @@ export class Profile {
     };
   }
 
-  mouseInToRegion
+  loadMapShapes() {
+    // load US state outline polygons from a GeoJSON file
+    this.map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/states.js', { idPropertyName: 'STATE' });
 
-  mouseOutOfRegion
-
-  initMap() {
-    var mapStyle = [{
-      'stylers': [{ 'visibility': 'off' }]
-    }, {
-      'featureType': 'landscape',
-      'elementType': 'geometry',
-      'stylers': [{ 'visibility': 'on' }, { 'color': '#fcfcfc' }]
-    }, {
-      'featureType': 'water',
-      'elementType': 'geometry',
-      'stylers': [{ 'visibility': 'on' }, { 'color': '#bfd4ff' }]
-    }];
-
-    let location = new google.maps.LatLng(-34.9290, 138.6010);
-
-    let options = {
-      center: location,
-      zoom: 4,
-      styles: mapStyle
-    };
-
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.map.data.setStyle(this.styleFeature);
-    this.map.data.addEventListener('mouseover', (e) => {
-      // set the hover state so the setStyle function can change the border
-      e.feature.setProperty('state', 'hover');
-  
-      var percent = (e.feature.getProperty('census_variable') - censusMin) /
-        (censusMax - censusMin) * 100;
-  
-      // update the label
-      document.getElementById('data_label').textContent =
-        e.feature.getProperty('NAME');
-      document.getElementById('data_value').textContent =
-        e.feature.getProperty('census_variable').toLocaleString();
-      document.getElementById('data_box').style.display = 'block';
-      document.getElementById('data_caret').style.display = 'block';
-      document.getElementById('data_caret').style.paddingLeft = percent + '%';
+    google.maps.event.addListenerOnce(this.map.data, 'addfeature', () => {
+      google.maps.event.trigger(this.cvRef.nativeElement,
+        'change');
     });
-
-    this.map.data.addEventListener('mouseout', (e) {
-      // reset the hover state, returning the border to normal
-      e.feature.setProperty('state', 'normal');
-    });
-
-    var selectBox = document.getElementById('census_variable');
-    google.maps.event.addDomListener(selectBox, 'change', function () {
-      this.clearCensusData();
-      this.loadCensusData(selectBox.options[selectBox.selectedIndex].value);
-    });
-
-    // state polygons only need to be loaded once, do them now
-    this.loadMapShapes();
   }
 
+  calculateRoute() {
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
+    var startPoint = new google.maps.LatLng(27.721503, 85.362072);
+    var departPoint = new google.maps.LatLng(27.711360, 85.318781);
+
+    var mapOptions = {
+      zoom: 14,
+      center: startPoint
+    };
+
+    var request = {
+      origin: 'Chicago, IL',
+      destination: 'Los Angeles, CA',
+      waypoints: [
+        {
+          location: 'Joplin, MO',
+          stopover: false
+        }, {
+          location: 'Oklahoma City, OK',
+          stopover: true
+        }],
+      provideRouteAlternatives: false,
+      travelMode: 'DRIVING',
+      drivingOptions: {
+        departureTime: new Date(/* now, or future date */),
+        trafficModel: 'pessimistic'
+      },
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    };
+
+    this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
+
+    directionsDisplay.setMap(this.map);
+
+    directionsService.route(request, (result, status) => {
+      if (status == "OK") {
+        directionsDisplay.setDirections(result);
+      }
+    });
+  }
 }

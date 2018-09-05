@@ -5,8 +5,8 @@
         <ion-icon name="camera"></ion-icon>
       </button>
     </ion-buttons>
-    
-    <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()">InstaClone</ion-title>
+
+    <ion-title style="border: 1px solid #ccc" (click)="scrollToTop()"> LifeGram </ion-title>
 
     <ion-buttons end right>
       <button color="black" ion-button icon-only (click)="goMessages()">
@@ -22,7 +22,7 @@
   <ion-scroll class="story" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
       <div class="story_img_bg">
-      <img no-margin no-padding class="story_img" [src]="s.img"></div>
+        <img no-margin no-padding class="story_img" [src]="s.img"></div>
       <p no-margin no-padding text-center class="story_text">{{ s.user_name }}</p>
     </div>
   </ion-scroll>
@@ -36,50 +36,94 @@
       <ion-row>
         <ion-col col-10>
           <ion-item>
-        <ion-avatar item-left>
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg">
-        </ion-avatar>
-        <h2 style="font-weight: bold">ashleyosama</h2>
-        <p>Cyprus</p>
-        
-      </ion-item>
-        </ion-col >
+            <ion-avatar item-left>
+              <img src="https://scontent-icn1-1.cdninstagram.com/vp/12e04c243e234bbc3b5eeeed5ddc170d/5C25103E/t51.2885-19/s150x150/19227751_486844421665379_8560746436638015488_a.jpg">
+            </ion-avatar>
+            <h2 style="font-weight: bold">안채림</h2>
+            <p>chaerimmm5</p>
+
+          </ion-item>
+        </ion-col>
         <ion-col col-2>
           <button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 15px" (click)="presentPostPopover()">
             <ion-icon name="more"></ion-icon>
-        </button>
+          </button>
         </ion-col>
       </ion-row>
-      
 
-      <img src="http://ionicframework.com/dist/preview-app/www/assets/img/advance-card-bttf.png" (tap)="tapPhotoLike($event)">
-
-      <p no-margin no-padding>
-        <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
-          <ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>
-        </button>
-        <button clear ion-button icon-only>
-          <ion-icon no-padding isActive="false" color="black" name="ios-text-outline" class="icon-space" style="font-weight: bold"></ion-icon>
-        </button>
-        <button clear ion-button icon-only>
-          <ion-icon no-padding isActive="false" color="black" name="paper-plane" class="icon-space"></ion-icon>
-        </button>
-        <button no-margin no-padding clear color="black" ion-button icon-only style="float: right">
-          <ion-icon name="ios-bookmark-outline"></ion-icon>
-        </button>
-      </p>
-      <hr>
-
-      <ion-card-content>
-        <p class="like-content"><ion-icon name="heart"></ion-icon> 250 likes</p>
-        <p><b>techcrunch</b> Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-      
-        <ion-note style="font-size: 12px">
-          11h ago
-        </ion-note>
-      </ion-card-content>
-
-    </ion-card>
-
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1>
+              <ion-label style = "text-align:center"> Day 1 </ion-label>
+          </ion-col>
+          <ion-col col-4>
+            <img height = "300px" src="/assets/img/image_src/gripeace.jpg">
+          </ion-col>
+          <ion-col col-7>
+            <ion-item>
+              <ion-label color="primary" stacked>여행 정보</ion-label>
+              <ion-textarea [placeholder]="information1" rows="10" readonly></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col col-1>
+                <ion-label style = "text-align:center"> Day 2 </ion-label>
+            </ion-col>
+            <ion-col col-4>
+              <img src="/assets/img/image_src/grov_mall.png" height = "300px" >
+            </ion-col>
+            <ion-col col-7>
+              <ion-item>
+                <ion-label color="primary" stacked>여행 정보</ion-label>
+                <ion-textarea [placeholder]="information2" rows="10" readonly></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+            <ion-row>
+                <ion-col col-1>
+                  <ion-label style = "text-align:center"> Day 3 </ion-label>
+              </ion-col>
+              <ion-col col-4>
+                <img height = "300px" src="/assets/img/image_src/la_koran_town.jpg">
+              </ion-col>
+              <ion-col col-7>
+                <ion-item>
+                  <ion-label color="primary" stacked>여행 정보</ion-label>
+                  <ion-textarea [placeholder]="information3" rows="10" readonly></ion-textarea>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+    
+          <p no-margin no-padding>
+            <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
+              <ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>
+            </button>
+            <button clear ion-button icon-only>
+              <ion-icon no-padding isActive="false" color="black" name="ios-text-outline" class="icon-space" style="font-weight: bold"></ion-icon>
+            </button>
+            <button clear ion-button icon-only>
+              <ion-icon no-padding isActive="false" color="black" name="paper-plane" class="icon-space"></ion-icon>
+            </button>
+            <button no-margin no-padding clear color="black" ion-button icon-only style="float: right">
+              <ion-icon name="ios-bookmark-outline"></ion-icon>
+            </button>
+          </p>
+          <hr>
+    
+          <ion-card-content>
+            <p class="like-content">
+              <ion-icon name="heart"></ion-icon> 250 likes
+            </p>
+            <p><b>techcrunch</b> Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine...
+              out of a DeLorean?! Whoa. This is heavy.</p>
+    
+            <ion-note style="font-size: 12px">
+              11h ago
+            </ion-note>
+          </ion-card-content>
+    
+        </ion-card>
   </div>
 </ion-content>

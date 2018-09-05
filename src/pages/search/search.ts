@@ -7,6 +7,8 @@ import { ModalPost } from '../modal-post/modal-post';
   templateUrl: 'search.html',
 })
 export class Search {
+  theme: string;
+  inout: string;
 
   // You can get this data from your API. This is a dumb data for being an example.
   public search_data = [
@@ -48,11 +50,15 @@ export class Search {
     }
   ];
 
+  
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public modalCtrl: ModalController
     ) {
+    this.inout = 'oversea';
+    this.theme = 'activity';
   }
 
   // Get search items from input with your API
@@ -78,4 +84,7 @@ export class Search {
     modal.present();
   }
 
+  compareFn(option1: any, option2: any) {
+      return option1.value === option2.value;
+  }
 }

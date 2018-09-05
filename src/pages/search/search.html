@@ -1,12 +1,63 @@
 <ion-header>
-    <ion-searchbar class="searchbar" (input)="getItems($event)"></ion-searchbar>
-</ion-header>
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let s of search_data" class="grid_img" col-4 (press)="pressPhoto(s.id, s.username, s.profile_img, s.post_img)">
-        <img [src]="s.post_img" alt="">
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+
+    <ion-navbar>
+      <ion-title>여행 검색</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  <ion-content class="outer-content">
+      
+    <ion-list>
+      <ion-item>
+        <ion-label>테마</ion-label>
+        <ion-select [(ngModel)]="theme">
+          <ion-option value="activity">액티비티</ion-option>
+          <ion-option value="rest">휴양</ion-option>
+          <ion-option value="tour">관광</ion-option>
+          <ion-option value="eat">식도락</ion-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label>국내 / 해외</ion-label>
+          <ion-select [(ngModel)]="inout" okText="Okay" cancelText="Dismiss">
+            <ion-option value="korea"> 국내 </ion-option>
+            <ion-option value="oversea"> 해외 </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>여행기간</ion-label>
+          <ion-input placeholder="ex) 3" text-right></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>인원</ion-label>
+            <ion-input placeholder="ex) 1" text-right></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label>경비</ion-label>
+            <ion-input placeholder="ex) 1200000" text-right></ion-input>
+          </ion-item>
+        <ion-item>
+            <ion-label>여행하는 달</ion-label>
+            <ion-select [(ngModel)]="month">
+                <ion-option value="1">1월</ion-option>
+                <ion-option value="2">2월</ion-option>
+                <ion-option value="3">3월</ion-option>
+                <ion-option value="4">4월</ion-option>
+                <ion-option value="5">5월</ion-option>
+                <ion-option value="6">6월</ion-option>
+                <ion-option value="7">7월</ion-option>
+                <ion-option value="8">8월</ion-option>
+                <ion-option value="9">9월</ion-option>
+                <ion-option value="10">10월</ion-option>
+                <ion-option value="11">11월</ion-option>
+                <ion-option value="12">12월</ion-option>
+              </ion-select>>
+          </ion-item>
+    </ion-list>
+    <ion-buttons end>
+        <button ion-button icon-only color="royal">
+            <button ion-button><ion-icon name="search"> 검색</ion-icon></button>
+        </button>
+    </ion-buttons>
+  </ion-content>

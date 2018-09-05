@@ -53,7 +53,7 @@ page-login {
       overflow: hidden;
     }
     .logo {
-      width: 50%;
+      width: 75%;
       height: auto;
       margin: 0 auto;
       padding-top: 50px;
@@ -79,14 +79,18 @@ page-login {
     .login-button {
       text-transform: none;
       border-radius: 3px !important;
+      top : 150px;
     }
+
     // Facebook icon
     ion-icon {
+      top : 150px;
       padding-right: 10px;
       font-size: 2.2rem;
     }
     // HR with text in the middle effect
     .strike {
+      top : 150px;
       display: block;
       text-align: center;
       overflow: hidden;

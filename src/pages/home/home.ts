@@ -5,7 +5,7 @@ import { Messages } from '../messages/messages';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 export class Home {
   @ViewChild(Content) content: Content;
@@ -16,39 +16,49 @@ export class Home {
   };
 
   public tap: number = 0;
+  public information1: string;
+  public information2: string;
+  public information3: string;
 
   // You can get this data from your API. This is a dumb data for being an example.
   public stories = [
     {
       id: 1,
-      img: 'https://avatars1.githubusercontent.com/u/918975?v=3&s=120',
-      user_name: 'candelibas'
+      img: 'https://avatars.githubusercontent.com/u/37039276?s=460&v=4',
+      user_name: '김권일'
     },
     {
       id: 2,
-      img: 'https://pbs.twimg.com/profile_images/726955832785571840/8OxhcDxl_400x400.jpg',
-      user_name: 'maxlynch'
+      img: 'https://scontent-icn1-1.cdninstagram.com/vp/12e04c243e234bbc3b5eeeed5ddc170d/5C25103E/t51.2885-19/s150x150/19227751_486844421665379_8560746436638015488_a.jpg',
+      user_name: '안채림'
     },
     {
       id: 3,
-      img: 'http://ionicframework.com/dist/preview-app/www/assets/img/sarah-avatar.png.jpeg',
-      user_name: 'ashleyosama'
-    },
-    {
-      id: 4,
-      img: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa_400x400.jpeg',
-      user_name: 'adam_bradley'
-    },
-    {
-      id: 5,
-      img: 'https://avatars1.githubusercontent.com/u/1024025?v=3&s=120',
-      user_name: 'linus_torvalds'
+      img: 'https://scontent-icn1-1.cdninstagram.com/vp/74d4a001973ffb1c519909dc584b0316/5C328D7A/t51.2885-19/11906329_960233084022564_1448528159_a.jpg',
+      user_name: '신승호'
     }
-    
   ];
 
-  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App) {
+  public contents = [
+  {
+    id : 1
+  },
+  { 
+    id : 2
+  },
+  {
+    id : 3
+  },
+  {
+    id : 4
+  }
+  ]
 
+  constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public app: App) {
+    this.information1 = "그리피스 천문대. \n 날씨도 너무 좋고 주변 음식들도 너무 맛있다 >_<";
+    this.information2 = "그로브몰. \n 석양과 함께";
+    this.information3 = "한인타운. \n 한인타운이지만 되게 이국적인 느낌!";
+  
   }
 
   likeButton() {
